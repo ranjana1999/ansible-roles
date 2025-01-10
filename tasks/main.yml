@@ -1,0 +1,22 @@
+---
+# tasks file for myapacheserver
+- name: Configuring {{ pkg_name }} server
+  apt:
+    name: "{{ pkg_name }}"
+    state:  "{{ svc_state}}"
+  when:  ansible_distribution == 'Ubuntu' or ansible_distribution == 'Debian'
+- name: Configuring {{ pkg_name }} server
+  yum:
+    name: "{{pkg_name_rhel}}"
+    state: "{{svc_state}}"
+  when:  ansible_distribution == "RedHat"
+- name: Creating index.html
+  copy:   #copy module can help to copy and also help in creating new file with content also
+    content: "{{mycode}}"
+    dest: "{{destination}}"
+  notify: restart apache
+- name: Copying another file
+  copy:
+    src:  ranjana.html
+    dest: /var/www/html/
+  notify: restart apache

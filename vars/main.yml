@@ -1,0 +1,8 @@
+---
+# vars file for myapacheserver
+pkg_name: apache2
+svc_state:  present
+pkg_name_rhel:  httpd
+destination:  /var/www/html/index.html
+mycode:  "Hi from ansible"
+
