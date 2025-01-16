@@ -10,10 +10,10 @@
     name: "{{pkg_name_rhel}}"
     state: "{{svc_state}}"
   when:  ansible_distribution == "RedHat"
-- name: Creating index.html
-  copy:   #copy module can help to copy and also help in creating new file with content also
-    content: "{{mycode}}"
-    dest: "{{destination}}"
+- name: Creating configuration file with jinja2
+  template:
+    src: ../files/index.html.j2
+    dest: "{{ destination }}"
   notify: restart apache
 - name: Copying another file
   copy:
