@@ -10,13 +10,22 @@
     name: "{{pkg_name_rhel}}"
     state: "{{svc_state}}"
   when:  ansible_distribution == "RedHat"
+- name: Check status of server
+  command:  systemctl is-active {{ pkg_name }}
+  register: service_status
+  ignore_errors:  true
+- name: Apache server status
+  debug:
+    var:  service_status.stdout
 - name: Creating configuration file with jinja2
   template:
     src: ../files/index.html.j2
     dest: "{{ destination }}"
+  when: service_status.stdout == 'active' 
   notify: restart apache
 - name: Copying another file
   copy:
     src:  ranjana.html
     dest: /var/www/html/
   notify: restart apache
+  when: service_status.stdout == 'active'

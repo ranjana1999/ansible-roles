@@ -1,7 +1,7 @@
 ---
 # vars file for myapacheserver
 pkg_name: apache2
-svc_state:  present
+svc_state:  absent
 pkg_name_rhel:  httpd
 destination:  /var/www/html/index.html
 website: "apache"
